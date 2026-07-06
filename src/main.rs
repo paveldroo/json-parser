@@ -1,5 +1,6 @@
 use std::error::Error;
 
+mod args;
 mod parser;
 mod reader;
 
@@ -14,10 +15,13 @@ fn main() {
 }
 
 fn run() -> Result<(), Box<dyn Error>> {
-    match parser::parse_json("some_input") {
-        Ok(data) => println!("json data: {data:?}"),
-        Err(err) => return Err(format!("parse error: {err}").into()),
+    let filepath = args::parse_filepath()?;
+    let input = reader::read_file(&filepath)?;
+    match parser::parse_json(&input) {
+        Ok(_) => {
+            println!("json data: {input}");
+            Ok(())
+        }
+        Err(err) => Err(format!("parse error: {err}").into()),
     }
-
-    Ok(())
 }

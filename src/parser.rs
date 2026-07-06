@@ -1,7 +1,7 @@
 use std::{collections::HashMap, error::Error};
 
 pub fn parse_json(input: &str) -> Result<(), Box<dyn Error>> {
-    if input.len() == 0 {
+    if input.is_empty() {
         return Err("json invalid".into());
     }
 
@@ -9,7 +9,7 @@ pub fn parse_json(input: &str) -> Result<(), Box<dyn Error>> {
     let mut parentheses: Vec<char> = Vec::new();
 
     for ch in input.chars() {
-        if parentheses.len() == 0 {
+        if parentheses.is_empty() {
             parentheses.push(ch);
             continue;
         }
@@ -33,7 +33,7 @@ mod tests {
 
     #[test]
     fn test_step1_valid() {
-        let data = crate::reader::read_file("step1", "valid.json").unwrap();
+        let data = crate::reader::read_file("tests/fixtures/step1/valid.json").unwrap();
         match parse_json(&data) {
             Ok(_) => assert!(true),
             Err(_) => assert!(false),
@@ -42,7 +42,7 @@ mod tests {
 
     #[test]
     fn test_step1_invalid() {
-        let data = crate::reader::read_file("step1", "invalid.json").unwrap();
+        let data = crate::reader::read_file("tests/fixtures/step1/invalid.json").unwrap();
         match parse_json(&data) {
             Ok(_) => assert!(false),
             Err(_) => assert!(true),

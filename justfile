@@ -1,19 +1,16 @@
 # Watch dev files
 run:
-    cargo run -- -m test.txt
+    cargo run -- tests/fixtures/step1/valid.json
 
 lint:
     cargo fmt
     cargo clippy -- -D warnings
 
 test:
-    cargo test --test integration
+    cargo test
 
 release:
-    cargo build --bin ccwc --release
-    cp target/release/ccwc .
-    chmod +x ./ccwc
-    ./ccwc -c test.txt
-
-watch:
-    cargo watch -q -c -w src/ -x "run -- -c test.txt"
+    cargo build --bin json-parser --release
+    cp target/release/json-parser .
+    chmod +x ./json-parser
+    ./json-parser tests/fixtures/step1/valid.json
