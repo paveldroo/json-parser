@@ -17,7 +17,7 @@ fn main() {
 fn run() -> Result<(), Box<dyn Error>> {
     let filepath = args::parse_filepath()?;
     let input = reader::read_file(&filepath)?;
-    match parser::parse_json(&input) {
+    match parser::parse_json(input.to_string()) {
         Ok(_) => {
             println!("json data: {input}");
             Ok(())
