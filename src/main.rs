@@ -32,7 +32,7 @@ fn run() -> Result<(), Box<dyn Error>> {
             buffer
         }
     };
-    match parser::parse_json(content.clone()) {
+    match parser::parse_json(&content) {
         Ok(_) => {
             println!("json data: {content}");
             Ok(())

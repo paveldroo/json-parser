@@ -1,7 +1,7 @@
 use std::error::Error;
 
-pub fn parse_json(mut input: String) -> Result<(), Box<dyn Error>> {
-    input = input.trim().to_string();
+pub fn parse_json(mut input: &str) -> Result<(), Box<dyn Error>> {
+    input = input.trim();
 
     if input.is_empty() {
         return Err("json invalid".into());
@@ -11,12 +11,7 @@ pub fn parse_json(mut input: String) -> Result<(), Box<dyn Error>> {
         return Err("json invalid".into());
     }
 
-    input = input
-        .strip_prefix('{')
-        .unwrap()
-        .strip_suffix('}')
-        .unwrap()
-        .to_string();
+    input = input.strip_prefix('{').unwrap().strip_suffix('}').unwrap();
 
     if input.is_empty() {
         return Ok(());
@@ -63,7 +58,7 @@ fn parse_list(mut input: String) -> Result<(), Box<dyn Error>> {
 
 fn parse_token(t: String) -> Result<(), Box<dyn Error>> {
     if t.starts_with('{') && t.ends_with('}') {
-        return parse_json(t.to_string());
+        return parse_json(&t);
     }
     if t.starts_with('[') && t.ends_with(']') {
         return parse_list(t.to_string());
@@ -91,7 +86,7 @@ mod tests {
     #[test]
     fn test_step1_valid() {
         let data = crate::reader::read_file("tests/fixtures/step1/valid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(true, "json data: {data:?}"),
             Err(_) => assert!(false, "json data: {data:?}"),
         }
@@ -100,7 +95,7 @@ mod tests {
     #[test]
     fn test_step1_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step1/invalid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(false, "json data: {data:?}"),
             Err(_) => assert!(true, "json data: {data:?}"),
         }
@@ -109,7 +104,7 @@ mod tests {
     #[test]
     fn test_step2_valid() {
         let data = crate::reader::read_file("tests/fixtures/step2/valid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(true, "json data: {data:?}"),
             Err(_) => assert!(false, "json data: {data:?}"),
         }
@@ -118,7 +113,7 @@ mod tests {
     #[test]
     fn test_step2_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step2/invalid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(false, "json data: {data:?}"),
             Err(_) => assert!(true, "json data: {data:?}"),
         }
@@ -127,7 +122,7 @@ mod tests {
     #[test]
     fn test_step2_valid2() {
         let data = crate::reader::read_file("tests/fixtures/step2/valid2.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(true, "json data: {data:?}"),
             Err(_) => assert!(false, "json data: {data:?}"),
         }
@@ -136,7 +131,7 @@ mod tests {
     #[test]
     fn test_step2_invalid2() {
         let data = crate::reader::read_file("tests/fixtures/step2/invalid2.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(false, "json data: {data:?}"),
             Err(_) => assert!(true, "json data: {data:?}"),
         }
@@ -145,7 +140,7 @@ mod tests {
     #[test]
     fn test_step3_valid() {
         let data = crate::reader::read_file("tests/fixtures/step3/valid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(true, "json data: {data:?}"),
             Err(_) => assert!(false, "json data: {data:?}"),
         }
@@ -154,7 +149,7 @@ mod tests {
     #[test]
     fn test_step3_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step3/invalid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(false, "json data: {data:?}"),
             Err(_) => assert!(true, "json data: {data:?}"),
         }
@@ -163,7 +158,7 @@ mod tests {
     #[test]
     fn test_step4_valid() {
         let data = crate::reader::read_file("tests/fixtures/step4/valid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(true, "json data: {data:?}"),
             Err(_) => assert!(false, "json data: {data:?}"),
         }
@@ -172,7 +167,7 @@ mod tests {
     #[test]
     fn test_step4_valid2() {
         let data = crate::reader::read_file("tests/fixtures/step4/valid2.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(true, "json data: {data:?}"),
             Err(_) => assert!(false, "json data: {data:?}"),
         }
@@ -181,7 +176,7 @@ mod tests {
     #[test]
     fn test_step4_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step4/invalid.json").unwrap();
-        match parse_json(data.to_string()) {
+        match parse_json(&data) {
             Ok(_) => assert!(false, "json data: {data:?}"),
             Err(_) => assert!(true, "json data: {data:?}"),
         }
