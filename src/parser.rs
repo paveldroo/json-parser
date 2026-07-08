@@ -1,5 +1,4 @@
-#![allow(unused)]
-use std::{collections::HashMap, error::Error};
+use std::error::Error;
 
 pub fn parse_json(mut input: String) -> Result<(), Box<dyn Error>> {
     input = input.trim().to_string();
@@ -24,7 +23,7 @@ pub fn parse_json(mut input: String) -> Result<(), Box<dyn Error>> {
     }
 
     input = input.trim().replace("\n", "");
-    let mut pairs: Vec<&str> = input.split(",").map(|split| split.trim()).collect();
+    let pairs: Vec<&str> = input.split(",").map(|split| split.trim()).collect();
 
     for pair in pairs.iter() {
         if pair.is_empty() {
@@ -83,7 +82,7 @@ fn parse_token(t: String) -> Result<(), Box<dyn Error>> {
         if t == "true" || t == "false" || t == "null" {
             return Ok(());
         }
-        let numeric = match t.parse::<i32>() {
+        match t.parse::<i32>() {
             Ok(_) => return Ok(()),
             Err(_) => return Err("json invalid".into()),
         };
