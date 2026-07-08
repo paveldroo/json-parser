@@ -56,10 +56,7 @@ fn parse_list(mut input: String) -> Result<(), Box<dyn Error>> {
 
     let splits: Vec<&str> = input.split(',').map(|token| token.trim()).collect();
     for s in splits.iter() {
-        match parse_token(s.to_string()) {
-            Ok(_) => continue,
-            Err(_) => return Err("json invalid".into()),
-        };
+        parse_token(s.to_string()).map_err(|_| "json invalid")?;
     }
     Ok(())
 }
