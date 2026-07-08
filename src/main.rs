@@ -1,4 +1,7 @@
-use std::error::Error;
+use std::{
+    error::Error,
+    io::{self, IsTerminal, Read},
+};
 
 mod args;
 mod parser;
@@ -15,11 +18,23 @@ fn main() {
 }
 
 fn run() -> Result<(), Box<dyn Error>> {
-    let filepath = args::parse_filepath()?;
-    let input = reader::read_file(&filepath)?;
-    match parser::parse_json(input.to_string()) {
+    let content = match args::parse_filepath() {
+        Ok(filename) => reader::read_file(&filename)?,
+        Err(_) => {
+            if io::stdin().is_terminal() {
+                return Err("missing filename as argument".into());
+            }
+            let mut buffer = String::new();
+            io::stdin().read_to_string(&mut buffer)?;
+            if buffer.is_empty() {
+                return Err("no stdin data and no filename was provided".into());
+            }
+            buffer
+        }
+    };
+    match parser::parse_json(content.clone()) {
         Ok(_) => {
-            println!("json data: {input}");
+            println!("json data: {content}");
             Ok(())
         }
         Err(err) => Err(format!("parse error: {err}").into()),
