@@ -83,80 +83,31 @@ fn parse_token(t: String) -> Result<(), Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_step1_valid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step1/valid.json").expect("fixture missing");
-        assert!(parse_json(&data).is_ok());
-    }
+    const CASES: &[(&str, bool)] = &[
+        ("tests/fixtures/step1/valid.json", true),
+        ("tests/fixtures/step1/invalid.json", false),
+        ("tests/fixtures/step2/valid.json", true),
+        ("tests/fixtures/step2/valid2.json", true),
+        ("tests/fixtures/step2/invalid.json", false),
+        ("tests/fixtures/step2/invalid2.json", false),
+        ("tests/fixtures/step3/valid.json", true),
+        ("tests/fixtures/step3/invalid.json", false),
+        ("tests/fixtures/step4/valid.json", true),
+        ("tests/fixtures/step4/valid2.json", true),
+        ("tests/fixtures/step4/invalid.json", false),
+    ];
 
     #[test]
-    fn test_step1_invalid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step1/invalid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_err());
-    }
+    fn fixtures_validate_as_expected() {
+        for &(path, want_valid) in CASES {
+            let data = crate::reader::read_file(path)
+                .unwrap_or_else(|e| panic!("cannot read fixture {path}: {e}"));
 
-    #[test]
-    fn test_step2_valid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step2/valid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_ok());
-    }
-
-    #[test]
-    fn test_step2_invalid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step2/invalid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_err());
-    }
-
-    #[test]
-    fn test_step2_valid2() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step2/valid2.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_ok());
-    }
-
-    #[test]
-    fn test_step2_invalid2() {
-        let data = crate::reader::read_file("tests/fixtures/step2/invalid2.json")
-            .expect("fixture_missing");
-        assert!(parse_json(&data).is_err());
-    }
-
-    #[test]
-    fn test_step3_valid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step3/valid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_ok());
-    }
-
-    #[test]
-    fn test_step3_invalid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step3/invalid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_err());
-    }
-
-    #[test]
-    fn test_step4_valid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step4/valid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_ok());
-    }
-
-    #[test]
-    fn test_step4_valid2() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step4/valid2.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_ok());
-    }
-
-    #[test]
-    fn test_step4_invalid() {
-        let data =
-            crate::reader::read_file("tests/fixtures/step4/invalid.json").expect("fixture_missing");
-        assert!(parse_json(&data).is_err());
+            let got_valid = parse_json(&data).is_ok();
+            assert_eq!(
+                got_valid, want_valid,
+                "fixture {path}: expected valid={want_valid}, got valid={got_valid}\ndata: {data:?}"
+            )
+        }
     }
 }
