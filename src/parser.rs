@@ -22,7 +22,6 @@ pub fn parse_json(mut input: String) -> Result<(), Box<dyn Error>> {
         return Ok(());
     }
 
-    input = input.trim().replace("\n", "");
     let pairs: Vec<&str> = input.split(",").map(|split| split.trim()).collect();
 
     for pair in pairs.iter() {
