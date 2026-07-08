@@ -86,99 +86,66 @@ mod tests {
     #[test]
     fn test_step1_valid() {
         let data = crate::reader::read_file("tests/fixtures/step1/valid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(true, "json data: {data:?}"),
-            Err(_) => assert!(false, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_ok());
     }
 
     #[test]
     fn test_step1_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step1/invalid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(false, "json data: {data:?}"),
-            Err(_) => assert!(true, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_err());
     }
 
     #[test]
     fn test_step2_valid() {
         let data = crate::reader::read_file("tests/fixtures/step2/valid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(true, "json data: {data:?}"),
-            Err(_) => assert!(false, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_ok());
     }
 
     #[test]
     fn test_step2_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step2/invalid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(false, "json data: {data:?}"),
-            Err(_) => assert!(true, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_err());
     }
 
     #[test]
     fn test_step2_valid2() {
         let data = crate::reader::read_file("tests/fixtures/step2/valid2.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(true, "json data: {data:?}"),
-            Err(_) => assert!(false, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_ok());
     }
 
     #[test]
     fn test_step2_invalid2() {
         let data = crate::reader::read_file("tests/fixtures/step2/invalid2.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(false, "json data: {data:?}"),
-            Err(_) => assert!(true, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_err());
     }
 
     #[test]
     fn test_step3_valid() {
         let data = crate::reader::read_file("tests/fixtures/step3/valid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(true, "json data: {data:?}"),
-            Err(_) => assert!(false, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_ok());
     }
 
     #[test]
     fn test_step3_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step3/invalid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(false, "json data: {data:?}"),
-            Err(_) => assert!(true, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_err());
     }
 
     #[test]
     fn test_step4_valid() {
         let data = crate::reader::read_file("tests/fixtures/step4/valid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(true, "json data: {data:?}"),
-            Err(_) => assert!(false, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_ok());
     }
 
     #[test]
     fn test_step4_valid2() {
         let data = crate::reader::read_file("tests/fixtures/step4/valid2.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(true, "json data: {data:?}"),
-            Err(_) => assert!(false, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_ok());
     }
 
     #[test]
     fn test_step4_invalid() {
         let data = crate::reader::read_file("tests/fixtures/step4/invalid.json").unwrap();
-        match parse_json(&data) {
-            Ok(_) => assert!(false, "json data: {data:?}"),
-            Err(_) => assert!(true, "json data: {data:?}"),
-        }
+        assert!(parse_json(&data).is_err());
     }
 }
