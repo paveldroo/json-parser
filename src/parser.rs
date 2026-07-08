@@ -36,15 +36,9 @@ pub fn parse_json(mut input: String) -> Result<(), Box<dyn Error>> {
 
 fn parse_pair(input: &str) -> Result<(), Box<dyn Error>> {
     let (key, value) = input.split_once(":").ok_or("json invalid")?;
-    match parse_token(key.trim().to_string()) {
-        Ok(_) => {}
-        Err(_) => return Err("json invalid".into()),
-    }
+    parse_token(key.trim().to_string()).map_err(|_| "json_invalid")?;
+    parse_token(value.trim().to_string()).map_err(|_| "json_invalid")?;
 
-    match parse_token(value.trim().to_string()) {
-        Ok(_) => {}
-        Err(_) => return Err("json invalid".into()),
-    }
     Ok(())
 }
 
